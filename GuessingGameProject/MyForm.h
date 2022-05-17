@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 
 namespace $safeprojectname$ {
 
@@ -11,7 +12,7 @@ namespace $safeprojectname$ {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	using namespace System::IO; 
+	using namespace System::IO;
 
 	/// <summary>
 	/// Summary for MyForm
@@ -27,8 +28,8 @@ namespace $safeprojectname$ {
 			//
 			srand(time(NULL));
 			random = rand() % 10 + 1;
-			 
-			
+
+
 		}
 
 	protected:
@@ -65,7 +66,7 @@ namespace $safeprojectname$ {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -192,57 +193,57 @@ namespace $safeprojectname$ {
 
 		}
 		double guess = 0;
-		double random;  
-		double hint = (random - guess); 
-		double nextGuess = 0; 
+		double random;
+		double hint = (random - guess);
+		double nextGuess = 0;
 #pragma endregion
 	private: System::Void submit_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		guess = Convert::ToDouble(this->Answer->Text);
-		
-		
-			if (guess == random)
-			{
-				this->CorrectOrIncorrect->Visible = true;
-				this->CorrectOrIncorrect->Text = L"Correct! Congratulations";
-				this->Answer->ReadOnly = true; 
-				this->Answer->BackColor = System::Drawing::Color::Green; 
-				this->Again->Visible = true;
-				this->HotOrCold->BackColor = System::Drawing::Color::Thistle;
 
-			}
-			else
-			{
-				this->CorrectOrIncorrect->Visible = true;
-				this->CorrectOrIncorrect->Text = L"Sorry, that was incorrect please try again";
-				nextGuess = Convert::ToDouble(this->Answer->Text);
-			}
-			
-			if (nextGuess == random)
-			{
-				this->CorrectOrIncorrect->Visible = true;
-				this->CorrectOrIncorrect->Text = L"Correct Congratulations!"; 
-				this->Answer->ReadOnly = true;
-				this->Answer->BackColor = System::Drawing::Color::Green;
-				this->Again->Visible = true;
-				this->HotOrCold->BackColor = System::Drawing::Color::Thistle;
-			}
-			else if (nextGuess - random < hint)
-			{
-				this->HotOrCold->BackColor = System::Drawing::Color::Red; 
-			}
-			else 
-			{
-				this->HotOrCold->BackColor = System::Drawing::Color::Blue; 
-			}
-			
+
+		if (guess == random)
+		{
+			this->CorrectOrIncorrect->Visible = true;
+			this->CorrectOrIncorrect->Text = L"Correct! Congratulations";
+			this->Answer->ReadOnly = true;
+			this->Answer->BackColor = System::Drawing::Color::Green;
+			this->Again->Visible = true;
+			this->HotOrCold->BackColor = System::Drawing::Color::Thistle;
+
+		}
+		else
+		{
+			this->CorrectOrIncorrect->Visible = true;
+			this->CorrectOrIncorrect->Text = L"Sorry, that was incorrect please try again";
+			nextGuess = Convert::ToDouble(this->Answer->Text);
+		}
+
+		if (nextGuess == random)
+		{
+			this->CorrectOrIncorrect->Visible = true;
+			this->CorrectOrIncorrect->Text = L"Correct Congratulations!";
+			this->Answer->ReadOnly = true;
+			this->Answer->BackColor = System::Drawing::Color::Green;
+			this->Again->Visible = true;
+			this->HotOrCold->BackColor = System::Drawing::Color::Thistle;
+		}
+		else if (abs(nextGuess - random) <= 2)
+		{
+			this->HotOrCold->BackColor = System::Drawing::Color::Red;
+		}
+		else
+		{
+			this->HotOrCold->BackColor = System::Drawing::Color::Blue;
+		}
+
 	}
-private: System::Void Again_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->CorrectOrIncorrect->Visible = false; 
-	this->Answer->ReadOnly = false; 
-	this->HotOrCold->BackColor = System::Drawing::Color::Thistle; 
-	this->Answer->BackColor = System::Drawing::Color::White;
-	random = rand() % 10 + 1;
-}
-};
+	private: System::Void Again_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->CorrectOrIncorrect->Visible = false;
+		this->Answer->ReadOnly = false;
+		this->HotOrCold->BackColor = System::Drawing::Color::Thistle;
+		this->Answer->BackColor = System::Drawing::Color::White;
+		random = rand() % 10 + 1;
+	}
+	};
 }
